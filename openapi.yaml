@@ -1,0 +1,62 @@
+openapi: '3.0.1'
+
+info:
+  title: Onboarding  API
+  version: '1.3'
+  description: STD22081
+servers:
+  - url: http://STD22081.com
+  - url: http://localhost:8080
+paths:
+  /students:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '500' : 
+          description: Internal Server Error
+
+    
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/Student'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+          
+        '500':
+          description: InternalServerError
+
+        
+components:
+  schemas:
+    Student: 
+      type: object
+      properties:
+        id: 
+          type: string
+          example: STD22081
+        name:
+          type: string
+          example: Kirisaki_VK
+        birthdate:
+          type: string
+          format: date-time
+
+  requestBodies:
+    Student:
+      description: A body to posts students
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Student'
+
+# by Kirisaki_VK
