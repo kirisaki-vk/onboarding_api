@@ -84,7 +84,9 @@ paths:
 
   /teacher:
     get: 
-       responses:
+      tags:
+        - "Teacher"
+      responses:
         '200':
           description: OK
           content:
@@ -95,6 +97,8 @@ paths:
           description: Internal Server Error
 
     post:
+      tags:
+        - "Teacher"
       requestBody:
         $ref: '#/components/requestBodies/Teacher'
       responses:
@@ -109,6 +113,8 @@ paths:
           description: InternalServerError
 
     delete:
+      tags:
+        - "Teacher"
       parameters:
         - name: teacherId
           in: query
@@ -132,6 +138,8 @@ paths:
           description: 'TCH not found'
         
     put:
+      tags:
+        - "Teacher"
       requestBody:
         $ref: '#/components/requestBodies/Teacher'
 
