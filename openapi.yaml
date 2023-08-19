@@ -8,8 +8,10 @@ servers:
   - url: http://STD22081.com
   - url: http://localhost:8080
 paths:
-  /students:
+  /student:
     get:
+      tags:
+        - "Student"
       responses:
         '200':
           description: OK
@@ -22,6 +24,8 @@ paths:
 
     
     post:
+      tags:
+        - "Student"
       requestBody:
         $ref: '#/components/requestBodies/Student'
       responses:
@@ -35,7 +39,113 @@ paths:
         '500':
           description: InternalServerError
 
+    delete:
+      tags:
+        - "Student"
+      parameters:
+        - name: studentId
+          in: query
+          description: "STD of the student to be deleted"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+
+        '400':
+          description: 'Invalid ID'
+
+        '404':
+          description: 'STD not found'
         
+    put:
+      tags:
+        - "Student"
+      requestBody:
+        $ref: '#/components/requestBodies/Student'
+
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+
+        '400':
+          description: Invalid ID
+
+
+  /teacher:
+    get: 
+       responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+        '500' : 
+          description: Internal Server Error
+
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/Teacher'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+          
+        '500':
+          description: InternalServerError
+
+    delete:
+      parameters:
+        - name: teacherId
+          in: query
+          description: "TCH of the teacher to be deleted"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+
+        '400':
+          description: 'Invalid ID'
+
+        '404':
+          description: 'TCH not found'
+        
+    put:
+      requestBody:
+        $ref: '#/components/requestBodies/Student'
+
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+
+        '400':
+          description: Invalid ID
+
 components:
   schemas:
     Student: 
@@ -51,6 +161,33 @@ components:
           type: string
           format: date-time
 
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: string
+          example: TCH00321
+        name:
+          type: string
+          example: Mr. Ryan
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Courses'
+
+    Courses:
+      type: object
+      properties:
+        id:
+          type: string
+          example: CRS00215
+        name:
+          type: string
+          example: API
+        description:
+          type: string
+          example: Course for undestanding how we can specify APIs
+
   requestBodies:
     Student:
       description: A body to posts students
@@ -58,5 +195,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Student'
+          
+    Teacher:
+      description: A body to posts teachers
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Teacher'
+
 
 # by Kirisaki_VK
